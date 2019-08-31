@@ -6,10 +6,20 @@ export class Board extends React.Component{
         return(
         <div>
             Board {this.props.activeUser}
-            <Circle color={this.props.activeUser} updateUser={this.props.updateUser}/>
-            <Circle color={this.props.activeUser} updateUser={this.props.updateUser}/>
-            <Circle color={this.props.activeUser} updateUser={this.props.updateUser}/>
+            <div style={{display:"flex"}}>
+                {this.props.gameBoard.map((element,index) =>
+                    <Circle 
+                        color={this.props.activeUser} 
+                        updateUser={this.props.updateUser}
+                        key={index}
+                        circleIndex={index}/>
+                )}
+            </div>
+            
+          
         </div>
         );
     }
 }
+
+

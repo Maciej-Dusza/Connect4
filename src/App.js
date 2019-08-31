@@ -8,12 +8,17 @@ export class App extends React.Component{
     constructor(){
         super();
         this.state={
-            activeUser: "red"
+            activeUser: "red",
+            gameBoard: ["","",""]   
         };
-        this.bindedOnClick=this.onClick.bind(this);
+        this.updateUser=this.updateUser.bind(this);
     }
 
-    onClick(){
+    updateUser(index){
+        console.log(index);
+        const copyGameBoard = [...this.state.gameBoard]
+        copyGameBoard[index]= this.state.activeUser;
+        this.setState({gameBoard:copyGameBoard}, ()=>console.log(this.state.gameBoard));
         if(this.state.activeUser==="red"){
             this.setState({activeUser:"yellow"});
         } else {
@@ -21,12 +26,17 @@ export class App extends React.Component{
         }
     }
 
+
    render(){
        return (
         <div>
             <div>CONNECT 4</div>
             <div>
-                <Board activeUser={this.state.activeUser} updateUser={this.bindedOnClick}/>
+                <Board 
+                    activeUser={this.state.activeUser} 
+                    updateUser={this.updateUser}
+                    gameBoard={this.state.gameBoard}
+                />
                 <Menu activeUser={this.state.activeUser}/>
                 <Chat activeUser={this.state.activeUser}/>
             </div>

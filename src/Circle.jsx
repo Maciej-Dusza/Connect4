@@ -28,6 +28,6 @@ export class Circle extends React.Component{
     }
 
     onClick(){
-        this.setState({color: this.props.color}, ()=> {this.props.updateUser();});
+        this.setState({color: this.props.color}, ()=> {this.props.updateUser(this.props.circleIndex);});
     }
 };
