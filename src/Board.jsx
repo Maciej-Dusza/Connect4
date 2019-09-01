@@ -1,23 +1,35 @@
 import React from "react";
 import { Circle } from "./Circle.jsx";
+import styled from "@emotion/styled";
+
+const BoardStyled=styled.div`
+    background-color: #2F3A9D;
+    padding: 10px;
+    border-radius: 30px;
+`;
+
+
 
 export class Board extends React.Component{
     render(){
         return(
-        <div>
-            Board {this.props.activeUser}
-            <div style={{display:"flex"}}>
+        <BoardStyled>          
                 {this.props.gameBoard.map((element,index) =>
-                    <Circle 
-                        color={this.props.activeUser} 
-                        updateUser={this.props.updateUser}
-                        key={index}
-                        circleIndex={index}/>
+                   <div style={{display:"flex"}}>
+                    {element.map((subelement,subindex)=>
+                        <Circle 
+                                color={this.props.activeUser} 
+                                updateUser={this.props.updateUser}
+                                key={index*10+subindex}
+                                circleIndex={index}
+                                circleSubindex={subindex}/>
+                    )}
+                   </div>
                 )}
-            </div>
+
             
           
-        </div>
+        </BoardStyled>
         );
     }
 }

@@ -1,7 +1,16 @@
 import React from "react";
+import {Header} from "./Header.jsx";
 import {Board} from "./Board.jsx";
 import {Menu} from "./Menu.jsx";
 import {Chat} from "./Chat.jsx";
+import {checkWinner} from "./CheckWinner.jsx"
+import styled from "@emotion/styled";
+
+const MainStyled=styled.div`
+        display: flex;
+        margin: 90px 30px 30px;
+        justify-content: space-between;
+    `;
 
 export class App extends React.Component{
    
@@ -9,16 +18,24 @@ export class App extends React.Component{
         super();
         this.state={
             activeUser: "red",
-            gameBoard: ["","",""]   
+            gameBoard: [
+                ["","","","","","",""],
+                ["","","","","","",""],
+                ["","","","","","",""],
+                ["","","","","","",""],
+                ["","","","","","",""],
+                ["","","","","","",""],
+            ]   
         };
         this.updateUser=this.updateUser.bind(this);
     }
 
-    updateUser(index){
-        console.log(index);
+    updateUser(index,subindex){
         const copyGameBoard = [...this.state.gameBoard]
-        copyGameBoard[index]= this.state.activeUser;
+        copyGameBoard[index][subindex]= this.state.activeUser;
         this.setState({gameBoard:copyGameBoard}, ()=>console.log(this.state.gameBoard));
+        const win=checkWinner(this.state.gameBoard, index, subindex);
+        console.log("win final ", win);
         if(this.state.activeUser==="red"){
             this.setState({activeUser:"yellow"});
         } else {
@@ -26,21 +43,21 @@ export class App extends React.Component{
         }
     }
 
-
    render(){
        return (
-        <div>
-            <div>CONNECT 4</div>
             <div>
-                <Board 
-                    activeUser={this.state.activeUser} 
-                    updateUser={this.updateUser}
-                    gameBoard={this.state.gameBoard}
-                />
-                <Menu activeUser={this.state.activeUser}/>
-                <Chat activeUser={this.state.activeUser}/>
+                <Header/>
+                <MainStyled>
+                    <Menu activeUser={this.state.activeUser}/>
+                    <Board 
+                        activeUser={this.state.activeUser} 
+                        updateUser={this.updateUser}
+                        gameBoard={this.state.gameBoard}
+                    />
+                    <Chat activeUser={this.state.activeUser}/>
+                </MainStyled>
+                
             </div>
-        </div>
         )
     }
 }
