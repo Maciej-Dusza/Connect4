@@ -8,7 +8,8 @@ const HeaderStyled=styled.div`
     width: 100%;
     height: 60px;
     background-color: #fff;
-    top:0px  
+    top:0px;
+    z-index:2;  
 `;
 
 export class Header extends React.Component{

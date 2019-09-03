@@ -12,6 +12,17 @@ const MainStyled=styled.div`
         justify-content: space-between;
     `;
 
+const WinnerStyled=styled.div`
+    position: absolute;    
+    top:50%;
+    left: 50%;
+    background: ${(props)=> props.color};
+    padding: 20px;
+    transform: translate(-50%, -50%);
+
+    
+`;
+
 export class App extends React.Component{
    
     constructor(){
@@ -25,7 +36,8 @@ export class App extends React.Component{
                 ["","","","","","",""],
                 ["","","","","","",""],
                 ["","","","","","",""],
-            ]   
+            ],
+            win: 0   
         };
         this.updateUser=this.updateUser.bind(this);
     }
@@ -38,7 +50,10 @@ export class App extends React.Component{
         copyGameBoard[index][subindex]= this.state.activeUser;
         this.setState({gameBoard:copyGameBoard}, ()=>console.log(this.state.gameBoard));
         const win=checkWinner(this.state.gameBoard, index, subindex);
-        console.log("win final ", win);
+        this.setState({win: win});
+        if(win>=3){
+            return;
+        }
         if(this.state.activeUser==="red"){
             this.setState({activeUser:"yellow"});
         } else {
@@ -52,14 +67,16 @@ export class App extends React.Component{
                 <Header/>
                 <MainStyled>
                     <Menu activeUser={this.state.activeUser}/>
-                    <Board 
+                    <div style={{position: "relative"}}><Board 
                         activeUser={this.state.activeUser} 
                         updateUser={this.updateUser}
                         gameBoard={this.state.gameBoard}
                     />
+                    {this.state.win>=3 && <WinnerStyled color={this.state.activeUser}>{this.state.activeUser} WIN</WinnerStyled>}
+                    </div>
                     <Chat activeUser={this.state.activeUser}/>
                 </MainStyled>
-                
+
                 
             </div>
         )
