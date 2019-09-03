@@ -31,6 +31,9 @@ export class App extends React.Component{
     }
 
     updateUser(index,subindex){
+        while(this.state.gameBoard[index+1] && this.state.gameBoard[index+1][subindex]===""){
+            index++;
+        }
         const copyGameBoard = [...this.state.gameBoard]
         copyGameBoard[index][subindex]= this.state.activeUser;
         this.setState({gameBoard:copyGameBoard}, ()=>console.log(this.state.gameBoard));
@@ -56,6 +59,7 @@ export class App extends React.Component{
                     />
                     <Chat activeUser={this.state.activeUser}/>
                 </MainStyled>
+                
                 
             </div>
         )

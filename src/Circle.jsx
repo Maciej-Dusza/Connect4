@@ -13,22 +13,19 @@ export class Circle extends React.Component{
     
     constructor(props){
         super(props);
-        this.state={
-            color: ""
-        }
         this.onClick=this.onClick.bind(this);
     }
 
     render(){
         return(
-            <CircleStyled color={this.state.color} onClick={this.onClick}/>              
+            <CircleStyled color={this.props.color} onClick={this.onClick}/>              
         )
     }
 
     onClick(){
-        if(this.state.color!==""){
+        if(this.props.color!==""){
              return;
         }
-        this.setState({color: this.props.color}, ()=> {this.props.updateUser(this.props.circleIndex,this.props.circleSubindex);});
+        this.props.updateUser(this.props.circleIndex,this.props.circleSubindex);
     }
 };

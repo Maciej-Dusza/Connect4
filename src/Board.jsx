@@ -18,7 +18,7 @@ export class Board extends React.Component{
                    <div style={{display:"flex"}}>
                     {element.map((subelement,subindex)=>
                         <Circle 
-                                color={this.props.activeUser} 
+                                color={this.props.gameBoard[index][subindex]} 
                                 updateUser={this.props.updateUser}
                                 key={index*10+subindex}
                                 circleIndex={index}
