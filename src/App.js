@@ -71,6 +71,7 @@ export class App extends React.Component{
                     <Menu 
                         activeUser={this.state.activeUser}
                         reset={this.reset}
+                        color={this.state.activeUser}
                     />
                     
                     <div style={{position: "relative"}}>

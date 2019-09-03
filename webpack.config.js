@@ -2,6 +2,9 @@ module.exports={
     entry:"./src/scripts.js",
     mode:"development",
     output:{filename:"bundle.js"},
+    devServer: {
+      port: 3000
+    },
     module: {
         rules: [
           {

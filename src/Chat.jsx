@@ -8,9 +8,38 @@ const ChatStyled=styled.div`
 `;
 
 export class Chat extends React.Component{
+    
+    constructor(){
+       super();
+       this.state={
+            comment:"",
+            commentsHistory:[]
+        };
+        this.getComment=this.getComment.bind(this);
+    }
+
+    componentDidMount() {
+        fetch("https://connect-comments-api.herokuapp.com/api/comments")
+          .then(comments => comments.json())
+          .then(json => console.log(json)); 
+      };
+    
+   
+    getComment(){
+        this.setState({comment: event.target.value})
+    }
+
     render(){
         return(
-        <ChatStyled>Chat {this.props.activeUser}</ChatStyled>
+        <ChatStyled>
+            <div>Chat {this.props.activeUser}</div>
+            <div>
+                <textarea value={this.state.comment} onChange={this.getComment}/>
+            </div>
+            <div>
+                {this.state.comment}
+            </div>
+        </ChatStyled>
         );
     }
 }
