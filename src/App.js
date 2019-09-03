@@ -3,8 +3,9 @@ import {Header} from "./Header.jsx";
 import {Board} from "./Board.jsx";
 import {Menu} from "./Menu.jsx";
 import {Chat} from "./Chat.jsx";
-import {checkWinner} from "./CheckWinner.jsx"
+import {checkWinner} from "./CheckWinner.jsx";
 import styled from "@emotion/styled";
+import {initArray} from "./helper.js"
 
 const MainStyled=styled.div`
         display: flex;
@@ -29,17 +30,11 @@ export class App extends React.Component{
         super();
         this.state={
             activeUser: "red",
-            gameBoard: [
-                ["","","","","","",""],
-                ["","","","","","",""],
-                ["","","","","","",""],
-                ["","","","","","",""],
-                ["","","","","","",""],
-                ["","","","","","",""],
-            ],
+            gameBoard: initArray(6,7,""),
             win: 0   
         };
         this.updateUser=this.updateUser.bind(this);
+        this.reset=this.reset.bind(this);
     }
 
     updateUser(index,subindex){
@@ -61,18 +56,30 @@ export class App extends React.Component{
         }
     }
 
+    reset(){
+        this.setState({
+            gameBoard: initArray(6,7,""),
+            win: 0
+        })
+    }
+
    render(){
        return (
             <div>
                 <Header/>
                 <MainStyled>
-                    <Menu activeUser={this.state.activeUser}/>
-                    <div style={{position: "relative"}}><Board 
-                        activeUser={this.state.activeUser} 
-                        updateUser={this.updateUser}
-                        gameBoard={this.state.gameBoard}
+                    <Menu 
+                        activeUser={this.state.activeUser}
+                        reset={this.reset}
                     />
-                    {this.state.win>=3 && <WinnerStyled color={this.state.activeUser}>{this.state.activeUser} WIN</WinnerStyled>}
+                    
+                    <div style={{position: "relative"}}>
+                        <Board 
+                            activeUser={this.state.activeUser} 
+                            updateUser={this.updateUser}
+                            gameBoard={this.state.gameBoard}
+                        />
+                        {this.state.win>=3 && <WinnerStyled color={this.state.activeUser}>{this.state.activeUser} WIN</WinnerStyled>}
                     </div>
                     <Chat activeUser={this.state.activeUser}/>
                 </MainStyled>

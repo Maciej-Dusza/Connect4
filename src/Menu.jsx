@@ -9,7 +9,17 @@ const MenuStyled=styled.div`
 export class Menu extends React.Component{
     render(){
         return(
-        <MenuStyled>MENU</MenuStyled>
+        <MenuStyled>
+            <div>MENU</div>
+            <div>
+                <button onClick={this.props.reset}>
+                    Reset
+                </button>
+            </div>
+            <div>Active User</div>
+            <div>Timer</div>
+            
+        </MenuStyled>
         );
     }
 }

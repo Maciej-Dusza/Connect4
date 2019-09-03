@@ -15,14 +15,15 @@ export class Board extends React.Component{
         return(
         <BoardStyled>          
                 {this.props.gameBoard.map((element,index) =>
-                   <div style={{display:"flex"}}>
+                   <div style={{display:"flex"}} key={index}>
                     {element.map((subelement,subindex)=>
                         <Circle 
-                                color={this.props.gameBoard[index][subindex]} 
-                                updateUser={this.props.updateUser}
-                                key={index*10+subindex}
-                                circleIndex={index}
-                                circleSubindex={subindex}/>
+                            color={this.props.gameBoard[index][subindex]} 
+                            updateUser={this.props.updateUser}
+                            key={index*10+subindex}
+                            circleIndex={index}
+                            circleSubindex={subindex}
+                        />
                     )}
                    </div>
                 )}
