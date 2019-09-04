@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
+import {Timer} from "./Timer.jsx"
 
 const MenuStyled=styled.div`
     width: 250px;
@@ -38,8 +39,7 @@ export class Menu extends React.Component{
                 <DivStyled width="70px">{this.props.activeUser}</DivStyled> 
                 <CircleStyled color={this.props.color}/>          
             </DivStyled>
-            <DivStyled>Timer</DivStyled>
-            
+            <Timer/>            
         </MenuStyled>
         );
     }

@@ -1,13 +1,57 @@
 import React from "react";
 
-const React = require('react')
-const ms = require('pretty-ms')
-
 export class Timer extends React.Component{
 
-    render(){
+    constructor(){
+        super();
+        this.state={
+            isOn:false,
+            time: 0,
+            start: 0
+        }
+        this.startTimer=this.startTimer.bind(this);
+        this.stopTimer=this.stopTimer.bind(this);
+    };
 
+
+    startTimer() {
+        console.log("Timer Started")
+        this.setState({
+            isOn: true,
+            start: Date.now()
+        })
+        this.timer = setInterval(
+            () => this.setState({time: Date.now() - this.state.start}), 
+            1000
+            );
+      };
+
+      stopTimer(){
+        this.setState({
+            isOn: false
+        });    
+        clearInterval(this.timer);
+      }
+      
+      milisecoundsToTime(msec){
+        let min = Math.floor(msec/(1000 * 60) % 60);
+        let minFormated = min<10? `0${min}` : min;
         
-        return
-    }
+        let sec = Math.floor(msec/1000 % 60);
+        let secFormated = sec<10? `0${sec}` : sec;
+        
+        return minFormated + ":" + secFormated
+      };
+
+      
+    render(){
+        return(
+            <div>
+                <button onClick={this.startTimer}>Start</button>
+                {this.state.isOn && <button onClick={this.stopTimer}>Stop</button>}
+                <div>{this.milisecoundsToTime(this.state.time)}</div>
+            </div>
+
+        )
+    };
 }
