@@ -32,11 +32,13 @@ export class App extends React.Component{
             activeUser: "red",
             gameBoard: initArray(6,7,""),
             win: 0,
-            activeGame: false,  
+            activeGame:""  
         };
         this.updateUser=this.updateUser.bind(this);
         this.reset=this.reset.bind(this);
         this.startGame=this.startGame.bind(this);
+        this.pauseGame=this.pauseGame.bind(this);
+        this.resetGame=this.resetGame.bind(this);
     }
 
     updateUser(index,subindex){
@@ -66,8 +68,16 @@ export class App extends React.Component{
     };
 
     startGame(){
-        this.setState({activeGame: true});
-        console.log("START");
+        this.setState({activeGame: "Game"});
+        console.log("Game START");
+    };
+    pauseGame(){
+        this.setState({activeGame: "Pause"});
+        console.log("Pause");
+    };
+    resetGame(){
+        this.setState({activeGame: ""});
+        console.log("Reset");
     };
 
    render(){
@@ -81,6 +91,8 @@ export class App extends React.Component{
                         color={this.state.activeUser}
                         startGame={this.startGame}
                         activeGame={this.state.activeGame}
+                        pauseGame={this.pauseGame}
+                        resetGame={this.resetGame}
                     />
                     
                     <div style={{position: "relative"}}>

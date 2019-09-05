@@ -14,18 +14,24 @@ export class Timer extends React.Component{
     };
 
     componentDidUpdate(prevProps){
-        if(this.props.activeGame && !prevProps.activeGame){
+        if(this.props.activeGame==="Game" && (prevProps.activeGame===""|| prevProps.activeGame==="Pause")){
             this.startTimer();
+            console.log("Timer Started")
+        }
+        if(this.props.activeGame==="Pause" && prevProps.activeGame === "Game"){
+            this.stopTimer();
+            console.log("Timer Stoped");
+        }
+        if(this.props.activeGame==="" && (prevProps.activeGame==="Game"|| prevProps.activeGame==="Pause")){
+            this.resetTimer();
+            console.log("Timer Reset");
         }
     };
 
-
-
     startTimer() {
-        console.log("Timer Started")
         this.setState({
             isOn: true,
-            start: Date.now()
+            start: Date.now()-this.state.time
         })
         this.timer = setInterval(
             () => this.setState({time: Date.now() - this.state.start}), 
@@ -39,7 +45,12 @@ export class Timer extends React.Component{
         });    
         clearInterval(this.timer);
       }
-      
+      resetTimer(){
+          this.setState({
+              time:0
+          })
+      }
+
       milisecoundsToTime(msec){
         let min = Math.floor(msec/(1000 * 60) % 60);
         let minFormated = min<10? `0${min}` : min;
@@ -54,7 +65,6 @@ export class Timer extends React.Component{
     render(){
         return(
             <div>
-                {this.state.isOn && <button onClick={this.stopTimer}>Stop</button>}
                 <div>{this.milisecoundsToTime(this.state.time)}</div>
             </div>
 

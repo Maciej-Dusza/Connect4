@@ -31,13 +31,18 @@ export class Menu extends React.Component{
         return(
         <MenuStyled>
             <div>MENU</div>
-            <div>
-                {this.props.activeGame && <button onClick={this.props.reset}>
-                    Reset
-                </button>}
-                
-                {!this.props.activeGame && <button onClick={this.props.startGame}>
+            <div>             
+                {this.props.activeGame==="" && <button onClick={this.props.startGame}>
                     Start
+                </button>}
+                {this.props.activeGame==="Game" && <button onClick={this.props.pauseGame}>
+                    Stop
+                </button>}
+                {this.props.activeGame==="Pause" && <button onClick={this.props.startGame}>
+                    Resume
+                </button>}
+                {this.props.activeGame==="Pause" && <button onClick={this.props.resetGame}>
+                    New Game
                 </button>}
             </div>
             <DivStyled>
