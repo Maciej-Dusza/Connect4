@@ -31,10 +31,12 @@ export class App extends React.Component{
         this.state={
             activeUser: "red",
             gameBoard: initArray(6,7,""),
-            win: 0   
+            win: 0,
+            activeGame: false,  
         };
         this.updateUser=this.updateUser.bind(this);
         this.reset=this.reset.bind(this);
+        this.startGame=this.startGame.bind(this);
     }
 
     updateUser(index,subindex){
@@ -61,7 +63,12 @@ export class App extends React.Component{
             gameBoard: initArray(6,7,""),
             win: 0
         })
-    }
+    };
+
+    startGame(){
+        this.setState({activeGame: true});
+        console.log("START");
+    };
 
    render(){
        return (
@@ -72,6 +79,8 @@ export class App extends React.Component{
                         activeUser={this.state.activeUser}
                         reset={this.reset}
                         color={this.state.activeUser}
+                        startGame={this.startGame}
+                        activeGame={this.state.activeGame}
                     />
                     
                     <div style={{position: "relative"}}>

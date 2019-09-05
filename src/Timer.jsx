@@ -13,6 +13,13 @@ export class Timer extends React.Component{
         this.stopTimer=this.stopTimer.bind(this);
     };
 
+    componentDidUpdate(prevProps){
+        if(this.props.activeGame && !prevProps.activeGame){
+            this.startTimer();
+        }
+    };
+
+
 
     startTimer() {
         console.log("Timer Started")
@@ -43,11 +50,10 @@ export class Timer extends React.Component{
         return minFormated + ":" + secFormated
       };
 
-      
+    
     render(){
         return(
             <div>
-                <button onClick={this.startTimer}>Start</button>
                 {this.state.isOn && <button onClick={this.stopTimer}>Stop</button>}
                 <div>{this.milisecoundsToTime(this.state.time)}</div>
             </div>

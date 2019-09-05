@@ -25,21 +25,29 @@ const DivStyled=styled.div`
 `;
 
 export class Menu extends React.Component{
+    
+    
     render(){
         return(
         <MenuStyled>
             <div>MENU</div>
             <div>
-                <button onClick={this.props.reset}>
+                {this.props.activeGame && <button onClick={this.props.reset}>
                     Reset
-                </button>
+                </button>}
+                
+                {!this.props.activeGame && <button onClick={this.props.startGame}>
+                    Start
+                </button>}
             </div>
             <DivStyled>
                 <DivStyled>Active User:</DivStyled>
                 <DivStyled width="70px">{this.props.activeUser}</DivStyled> 
                 <CircleStyled color={this.props.color}/>          
             </DivStyled>
-            <Timer/>            
+            <Timer
+                activeGame={this.props.activeGame}
+           />            
         </MenuStyled>
         );
     }
