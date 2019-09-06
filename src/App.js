@@ -47,10 +47,11 @@ export class App extends React.Component{
         }
         const copyGameBoard = [...this.state.gameBoard]
         copyGameBoard[index][subindex]= this.state.activeUser;
-        this.setState({gameBoard:copyGameBoard}, ()=>console.log(this.state.gameBoard));
+        this.setState({gameBoard:copyGameBoard});
         const win=checkWinner(this.state.gameBoard, index, subindex);
         this.setState({win: win});
         if(win>=3){
+            this.setState({activeGame:"Win"});
             return;
         }
         if(this.state.activeUser==="red"){
@@ -100,6 +101,7 @@ export class App extends React.Component{
                             activeUser={this.state.activeUser} 
                             updateUser={this.updateUser}
                             gameBoard={this.state.gameBoard}
+                            activeGame={this.state.activeGame}
                         />
                         {this.state.win>=3 && <WinnerStyled color={this.state.activeUser}>{this.state.activeUser} WIN</WinnerStyled>}
                     </div>

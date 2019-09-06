@@ -23,6 +23,7 @@ export class Board extends React.Component{
                             key={index*10+subindex}
                             circleIndex={index}
                             circleSubindex={subindex}
+                            activeGame={this.props.activeGame}
                         />
                     )}
                    </div>

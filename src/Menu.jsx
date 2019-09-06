@@ -24,9 +24,27 @@ const DivStyled=styled.div`
     width: ${(props)=>props.width || "auto"};
 `;
 
+const newGameStates=["Pause","Win"]
+
 export class Menu extends React.Component{
     
+    constructor(){
+        super();
+        this.reset=this.reset.bind(this);
+        this.newGame=this.newGame.bind(this);
+    }
+
+
+    reset(){
+        this.props.resetGame()
+        this.props.reset()
+        console.log("reset")
+    };
     
+    newGame(){
+            return newGameStates.indexOf(this.props.activeGame)>-1;
+    }
+
     render(){
         return(
         <MenuStyled>
@@ -41,7 +59,7 @@ export class Menu extends React.Component{
                 {this.props.activeGame==="Pause" && <button onClick={this.props.startGame}>
                     Resume
                 </button>}
-                {this.props.activeGame==="Pause" && <button onClick={this.props.resetGame}>
+                {this.newGame() && <button onClick={this.reset}>
                     New Game
                 </button>}
             </div>

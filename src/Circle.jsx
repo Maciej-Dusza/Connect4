@@ -26,6 +26,8 @@ export class Circle extends React.Component{
         if(this.props.color!==""){
              return;
         }
+        else if(this.props.activeGame==="Game"){
         this.props.updateUser(this.props.circleIndex,this.props.circleSubindex);
+        }
     }
 };

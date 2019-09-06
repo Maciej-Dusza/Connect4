@@ -14,15 +14,16 @@ export class Timer extends React.Component{
     };
 
     componentDidUpdate(prevProps){
+        
         if(this.props.activeGame==="Game" && (prevProps.activeGame===""|| prevProps.activeGame==="Pause")){
             this.startTimer();
             console.log("Timer Started")
         }
-        if(this.props.activeGame==="Pause" && prevProps.activeGame === "Game"){
+        if((this.props.activeGame==="Pause"|| this.props.activeGame==="Win") && prevProps.activeGame === "Game"){
             this.stopTimer();
             console.log("Timer Stoped");
         }
-        if(this.props.activeGame==="" && (prevProps.activeGame==="Game"|| prevProps.activeGame==="Pause")){
+        if(!this.props.activeGame && prevProps.activeGame){
             this.resetTimer();
             console.log("Timer Reset");
         }
