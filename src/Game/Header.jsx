@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
-import HeaderLogo from "./HeaderLogo.png"; 
+import HeaderLogo from "../assets/HeaderLogo.png"; 
+import {Link} from "react-router-dom";
 
 const HeaderStyled=styled.div`
     position:fixed;
@@ -18,6 +19,8 @@ export class Header extends React.Component{
         return(
             <HeaderStyled>
                 <img height="90%" src={HeaderLogo} alt="HeaderLogo" />
+                <Link to="/">Game  </Link>
+                <Link to="/options">Options</Link>
             </HeaderStyled>
         )
 
