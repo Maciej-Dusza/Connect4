@@ -38,7 +38,6 @@ export class Menu extends React.Component{
     reset(){
         this.props.resetGame()
         this.props.reset()
-        console.log("reset")
     };
     
     newGame(){

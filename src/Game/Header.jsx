@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import HeaderLogo from "../assets/HeaderLogo.png"; 
 import {Link} from "react-router-dom";
 
+
 const HeaderStyled=styled.div`
     position:fixed;
     box-shadow: 0 0 10px 5px rgba(0,0,0,0.3);

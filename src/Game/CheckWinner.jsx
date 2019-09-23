@@ -16,8 +16,7 @@ const checkVertical=(gameBoard, index, subindex)=>{
     let left=subindex;
     while (gameBoard[index][right+1]===gameBoard[index][right]){
         win++;
-        right++;
-        console.log("Vertical ");            
+        right++;       
     };
     while(gameBoard[index][left-1]===gameBoard[index][left]){
         win++;
@@ -52,14 +51,12 @@ const checkSlantRight=(gameBoard, index, subindex)=>{
     while (gameBoard[up+1] && gameBoard[up][right]===gameBoard[up+1][right+1]){
         win++;
         up++;
-        right++;
-        console.log("SlantRightUp ");            
+        right++;          
     };
     while(gameBoard[down-1] && gameBoard[down][left]===gameBoard[down-1][left-1]){
         win++;
         down--;
         left--;
-        console.log("SlantRightDown ");
     };
     return win;
 };
@@ -74,14 +71,12 @@ const checkSlantLeft=(gameBoard, index, subindex)=>{
     while (gameBoard[down-1] && gameBoard[down][right]===gameBoard[down-1][right+1]){
         win++;
         down--;
-        right++;
-        console.log("SlantLeftDown ");            
+        right++;          
     };
     while(gameBoard[up+1] && gameBoard[up][left]===gameBoard[up+1][left-1]){
         win++;
         up++;
         left--;
-        console.log("SlantLeftUp ");
     };
     return win;
 };

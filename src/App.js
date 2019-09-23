@@ -11,10 +11,18 @@ export class App extends React.Component{
         this.state={
             rows: 6,
             columns: 7,
+            gameMode:"playerVsPlayer",
+            game:"",
         };
         this.boardHigh=this.boardHigh.bind(this);
         this.boardWitdh=this.boardWitdh.bind(this);
+        this.setGameMode=this.setGameMode.bind(this);
+        this.setGame=this.setGame.bind(this);
     };
+
+    componentWillUnmount(){
+        this.state.game="";
+    }
 
     boardHigh(event){
         this.setState({
@@ -30,26 +38,43 @@ export class App extends React.Component{
         })
     };
 
+    setGameMode(event){
+        this.setState({
+            gameMode: event.target.value, 
+            });
+        console.log("Seting Game Mode")
+    };
+
+    setGame(status){
+        this.setState({
+            game: status,
+        })
+    }
+
     render(){
 
-        const a = 5;
         return <Router>
-            <Header/>
+            <Header
+            />
             <Route exact path="/" render={() => (
                 <Game 
                     rows={this.state.rows}
                     columns={this.state.columns}
+                    setGame={this.setGame}
+                    game={this.state.game}
                 />)} 
             />
 
-            <Route path="/options" render={()=>( 
-                <Options 
-                    boardHigh= {this.boardHigh} 
-                    boardWitdh={this.boardWitdh} 
-                    rows={this.state.rows}
-                    columns={this.state.columns}
-                />)}
-            />
+        <Route path="/options" render={()=>( 
+            <Options 
+                boardHigh= {this.boardHigh} 
+                boardWitdh={this.boardWitdh} 
+                rows={this.state.rows}
+                columns={this.state.columns}
+                setGameMode={this.setGameMode}
+                gameMode={this.state.gameMode}
+            />)}
+        />
 
         </Router>
     }

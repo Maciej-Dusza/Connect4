@@ -1,5 +1,4 @@
 import React from "react";
-import {Header} from "./Header.jsx";
 import {Board} from "./Board.jsx";
 import {Menu} from "./Menu.jsx";
 import {Chat} from "./Chat.jsx";
@@ -7,6 +6,7 @@ import {checkWinner} from "./CheckWinner.jsx";
 import styled from "@emotion/styled";
 import {initArray} from "../helpers/helper.js"
 import { ContentWraper } from "../common/ContentWrapper.jsx";
+import { Prompt } from "react-router-dom";
 
 const MainStyled=styled.div`
         display: flex;
@@ -53,6 +53,7 @@ export class Game extends React.Component{
         this.setState({win: win});
         if(win>=3){
             this.setState({activeGame:"Win"});
+            this.props.setGame("");
             return;
         }
         if(this.state.activeUser==="red"){
@@ -71,15 +72,15 @@ export class Game extends React.Component{
 
     startGame(){
         this.setState({activeGame: "Game"});
-        console.log("Game START");
+        this.props.setGame("Play");
     };
     pauseGame(){
         this.setState({activeGame: "Pause"});
-        console.log("Pause");
+        this.props.setGame("Play");
     };
     resetGame(){
         this.setState({activeGame: ""});
-        console.log("Reset");
+        this.props.setGame("Play");
     };
 
    render(){
@@ -124,6 +125,11 @@ export class Game extends React.Component{
                     <Chat activeUser={this.state.activeUser}/>
                 </MainStyled>
             </div>
+            <Prompt
+                    when={this.props.game==="Play"}
+                    message={"Are you sure you want to leave game?"}
+                    onConfirm={()=> this.props.setGame("")}
+                    />
         </ContentWraper>
         )
     }
