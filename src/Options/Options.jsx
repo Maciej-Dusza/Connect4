@@ -23,8 +23,8 @@ export class Options extends React.Component {
                 </select>
                 <div>Mode</div>
                 <select onChange={this.props.setGameMode} value={this.props.gameMode}>
-                    <option value="playerVsPlayer">Player vs Player</option>
                     <option value="playerVsComputer">Player vs Computer</option>
+                    <option value="playerVsPlayer">Player vs Player</option>
                 </select>
             </ContentWraper>
         )

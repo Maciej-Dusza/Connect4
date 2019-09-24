@@ -7,6 +7,8 @@ import styled from "@emotion/styled";
 import { initArray } from "../helpers/helper.js"
 import { ContentWraper } from "../common/ContentWrapper.jsx";
 import { Prompt } from "react-router-dom";
+import { pcPlayer } from "../pcPlayer/pcPlayer.js";
+import { timingSafeEqual } from "crypto";
 
 const MainStyled = styled.div`
     display: flex;
@@ -29,7 +31,6 @@ export class Game extends React.Component {
         this.state = {
             activeUser: "red",
             gameBoard: [],
-            win: 0,
             activeGame: ""
         };
         this.state.gameBoard = initArray(this.props.rows, this.props.columns, "");
@@ -40,24 +41,45 @@ export class Game extends React.Component {
         this.resetGame = this.resetGame.bind(this);
     }
 
-    updateUser(index, subindex) {
+    changeUser() {
+        console.log(this.state.activeUser)
+        if (this.state.activeUser === "red") {
+            this.setState({ activeUser: "yellow" });
+        } else {
+            this.setState({ activeUser: "red" });
+        }
+    };
+
+    updateBoard(index, subindex) {
         while (this.state.gameBoard[index + 1] && this.state.gameBoard[index + 1][subindex] === "") {
             index++;
         }
         const copyGameBoard = [...this.state.gameBoard]
         copyGameBoard[index][subindex] = this.state.activeUser;
         this.setState({ gameBoard: copyGameBoard });
-        const win = checkWinner(this.state.gameBoard, index, subindex);
-        this.setState({ win: win });
+
+        const win = checkWinner(copyGameBoard, index, subindex);
         if (win >= 3) {
             this.setState({ activeGame: "Win" });
             this.props.setGame("");
-            return;
+            return true;
         }
-        if (this.state.activeUser === "red") {
-            this.setState({ activeUser: "yellow" });
-        } else {
-            this.setState({ activeUser: "red" });
+        return false;
+    };
+
+    updateUser(index, subindex) {
+        const gameEnded = this.updateBoard(index, subindex);
+        if (gameEnded) { return }
+        if (this.props.gameMode === "playerVsComputer") {
+            this.setState({ activeUser: "yellow" }, () => {
+                const [i, s] = pcPlayer();
+                const cpGameEnded = this.updateBoard(i, s);
+                !cpGameEnded && this.changeUser();
+            })
+        }
+        else {
+            console.log("change User")
+            this.changeUser();
         }
     }
 
@@ -105,7 +127,7 @@ export class Game extends React.Component {
                                 gameBoard={this.state.gameBoard}
                                 activeGame={this.state.activeGame}
                             />
-                            {this.state.win >= 3 &&
+                            {this.state.activeGame === "Win" &&
                                 <PopupStyled color={this.state.activeUser}>
                                     {this.state.activeUser}
                                     WIN

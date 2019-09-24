@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Game } from "./Game/Game.jsx"
 import { Options } from "./Options/Options.jsx"
 import { Header } from "./Game/Header.jsx"
@@ -11,7 +11,7 @@ export class App extends React.Component {
         this.state = {
             rows: 6,
             columns: 7,
-            gameMode: "playerVsPlayer",
+            gameMode: "playerVsComputer",
             game: "",
         };
         this.boardHigh = this.boardHigh.bind(this);
@@ -62,6 +62,7 @@ export class App extends React.Component {
                     columns={this.state.columns}
                     setGame={this.setGame}
                     game={this.state.game}
+                    gameMode={this.state.gameMode}
                 />)}
             />
 
