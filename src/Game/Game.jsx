@@ -72,7 +72,7 @@ export class Game extends React.Component {
         if (gameEnded) { return }
         if (this.props.gameMode === "playerVsComputer") {
             this.setState({ activeUser: "yellow" }, () => {
-                const [i, s] = pcPlayer();
+                const [i, s] = pcPlayer(this.state.gameBoard);
                 const cpGameEnded = this.updateBoard(i, s);
                 !cpGameEnded && this.changeUser();
             })
