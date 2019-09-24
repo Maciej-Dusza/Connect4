@@ -6,14 +6,23 @@ function bestPlace(possibleFields) {
     }
     let max = possibleFields[0].win;
     let maxIndex = 0;
+    let loseIndex = -1;
 
-    for (let i = 1; i < possibleFields.length; i++) {
+    for (let i = 0; i < possibleFields.length; i++) {
+        if (possibleFields[i].lose > 2) {
+            loseIndex = i;
+            console.log("Lose: ", loseIndex);
+        }
         if (possibleFields[i].win > max) {
             maxIndex = i;
             max = possibleFields[i].win;
         }
     }
-    return maxIndex;
+    let chosenIndex = 0;
+    if (loseIndex === -1) { chosenIndex = maxIndex }
+    else { chosenIndex = loseIndex }
+
+    return [possibleFields[chosenIndex].row, possibleFields[chosenIndex].column];
 }
 
 export function pcPlayer(gameBoard) {
@@ -28,18 +37,26 @@ export function pcPlayer(gameBoard) {
             while (index < 6 && gameBoard[index][subindex] === "") {
                 index++;
             }
-            let winCount =
-                possibleFields = [...possibleFields, { row: index - 1, column: subindex, win: checkWinner(gameBoard, index - 1, subindex, "yellow") }];
+            possibleFields = [...possibleFields,
+            {
+                row: index - 1,
+                column: subindex,
+                win: checkWinner(gameBoard, index - 1, subindex, "yellow"),
+                lose: checkWinner(gameBoard, index - 1, subindex, "red")
+            }];
+
         }
         subindex++;
         index = 0;
     };
-    let chosen = bestPlace(possibleFields);
-    console.log("Najlepsze pole ", possibleFields[chosen].row, " ", possibleFields[chosen].column)
 
+
+
+    console.log("Najlepsze pole ", bestPlace(possibleFields))
     console.log(possibleFields)
 
+
     return (
-        [possibleFields[chosen].row, possibleFields[chosen].column]
+        bestPlace(possibleFields)
     )
 };
