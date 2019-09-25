@@ -1,28 +1,33 @@
 import { checkWinner } from "../Game/CheckWinner.jsx";
 
-function bestPlace(possibleFields) {
+function findBestPlace(possibleFields) {
     if (possibleFields.length === 0) {
         return -1;
     }
+    let maxIndexes = [0];
     let max = possibleFields[0].win;
-    let maxIndex = 0;
-    let loseIndex = -1;
 
-    for (let i = 0; i < possibleFields.length; i++) {
-        if (possibleFields[i].lose > 2) {
-            loseIndex = i;
-            console.log("Lose: ", loseIndex);
+    for (let i = 0; i < possibleFields.length - 1; i++) {
+        // Check if you can win
+        if (possibleFields[i].win > 2) { return i; }
+        // Check if you can lose
+        if (possibleFields[i].lose > 2) { return i; }
+
+        //If checked Field is better, reset best and save checked field 
+        if (max < possibleFields[i + 1].win) {
+            max = possibleFields[i + 1].win;
+            maxIndexes = [i + 1];
         }
-        if (possibleFields[i].win > max) {
-            maxIndex = i;
-            max = possibleFields[i].win;
+        // If checked Field is as good as best, add to posible choice
+        else if (max === possibleFields[i + 1].win) {
+            maxIndexes = [...maxIndexes, i + 1];
         }
+        //If checked is Worst do nothing
     }
-    let chosenIndex = 0;
-    if (loseIndex === -1) { chosenIndex = maxIndex }
-    else { chosenIndex = loseIndex }
+    //Pick random number from 0 to count of best options
+    let chosenBestIndex = Math.floor(Math.random() * 100) % maxIndexes.length;
 
-    return [possibleFields[chosenIndex].row, possibleFields[chosenIndex].column];
+    return maxIndexes[chosenBestIndex];
 }
 
 export function pcPlayer(gameBoard) {
@@ -50,13 +55,11 @@ export function pcPlayer(gameBoard) {
         index = 0;
     };
 
-
-
-    console.log("Najlepsze pole ", bestPlace(possibleFields))
     console.log(possibleFields)
 
+    let chosenIndex = findBestPlace(possibleFields);
+    console.log("Najlepsze pole ", possibleFields[chosenIndex].row, possibleFields[chosenIndex].column)
 
-    return (
-        bestPlace(possibleFields)
-    )
+
+    return ([possibleFields[chosenIndex].row, possibleFields[chosenIndex].column])
 };
