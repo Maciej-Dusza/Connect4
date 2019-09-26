@@ -1,3 +1,4 @@
+import { checkPc } from "./checkPc.js";
 import { checkWinner } from "../Game/CheckWinner.jsx";
 
 function findBestPlace(possibleFields) {
@@ -9,7 +10,7 @@ function findBestPlace(possibleFields) {
 
     for (let i = 0; i < possibleFields.length - 1; i++) {
         // Check if you can win
-        if (possibleFields[i].win > 2) { return i; }
+        // if (possibleFields[i].win > 2) { return i; }
         // Check if you can lose
         if (possibleFields[i].lose > 2) { return i; }
 
@@ -46,8 +47,9 @@ export function pcPlayer(gameBoard) {
             {
                 row: index - 1,
                 column: subindex,
-                win: checkWinner(gameBoard, index - 1, subindex, "yellow"),
-                lose: checkWinner(gameBoard, index - 1, subindex, "red")
+                win: checkPc(gameBoard, index - 1, subindex),
+                lose: checkWinner(gameBoard, index - 1, subindex, "red"),
+                total: checkPc(gameBoard, index - 1, subindex)
             }];
 
         }

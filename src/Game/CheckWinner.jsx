@@ -1,4 +1,3 @@
-import React from "react";
 
 export const checkWinner = (gameBoard, index, subindex, current) => {
     let x = current || gameBoard[index][subindex]
@@ -29,15 +28,10 @@ const checkVertical = (gameBoard, index, subindex, x) => {
 const checkHorizontal = (gameBoard, index, subindex, x) => {
     let win = 0;
     let down = index;
-    let up = index;
 
-    while (gameBoard[down - 1] && x === gameBoard[down - 1][subindex]) {
+    while (gameBoard[down + 1] && x === gameBoard[down + 1][subindex]) {
         win++;
-        down--;
-    };
-    while (gameBoard[up + 1] && x === gameBoard[up + 1][subindex]) {
-        win++;
-        up++;
+        down++;
     };
     return win;
 };
