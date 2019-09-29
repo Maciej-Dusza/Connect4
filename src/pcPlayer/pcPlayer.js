@@ -5,22 +5,25 @@ function findBestPlace(possibleFields) {
     if (possibleFields.length === 0) {
         return -1;
     }
-    let maxIndexes = [0];
-    let max = possibleFields[0].win;
+    // Check if you can win
+    let wins = possibleFields.map((element) => element.win);
+    if (Math.max(...wins) > 2) { return wins.indexOf(Math.max(...wins)) }
 
+    // Check if you can lose
+    let loses = possibleFields.map((element) => element.lose);
+    if (Math.max(...loses) > 2) { return loses.indexOf(Math.max(...loses)) }
+
+    let maxIndexes = [0];
+    let max = possibleFields[0].advanceWin;
     for (let i = 0; i < possibleFields.length - 1; i++) {
-        // Check if you can win
-        // if (possibleFields[i].win > 2) { return i; }
-        // Check if you can lose
-        if (possibleFields[i].lose > 2) { return i; }
 
         //If checked Field is better, reset best and save checked field 
-        if (max < possibleFields[i + 1].win) {
-            max = possibleFields[i + 1].win;
+        if (max < possibleFields[i + 1].advanceWin) {
+            max = possibleFields[i + 1].advanceWin;
             maxIndexes = [i + 1];
         }
         // If checked Field is as good as best, add to posible choice
-        else if (max === possibleFields[i + 1].win) {
+        else if (max === possibleFields[i + 1].advanceWin) {
             maxIndexes = [...maxIndexes, i + 1];
         }
         //If checked is Worst do nothing
@@ -47,9 +50,11 @@ export function pcPlayer(gameBoard) {
             {
                 row: index - 1,
                 column: subindex,
-                win: checkPc(gameBoard, index - 1, subindex),
+                win: checkWinner(gameBoard, index - 1, subindex, "yellow"),
                 lose: checkWinner(gameBoard, index - 1, subindex, "red"),
-                total: checkPc(gameBoard, index - 1, subindex)
+                advanceWin: checkPc(gameBoard, index - 1, subindex, "yellow") + 3 * checkPc(gameBoard, index - 1, subindex, "red"),
+                adWin: checkPc(gameBoard, index - 1, subindex, "yellow"),
+                adLose: checkPc(gameBoard, index - 1, subindex, "red"),
             }];
 
         }
