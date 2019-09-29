@@ -1,5 +1,6 @@
 import { checkPc } from "./checkPc.js";
 import { checkWinner } from "../Game/CheckWinner.jsx";
+import { oponenet } from "../helpers/helper.js";
 
 function findBestPlace(possibleFields) {
     if (possibleFields.length === 0) {
@@ -34,7 +35,7 @@ function findBestPlace(possibleFields) {
     return maxIndexes[chosenBestIndex];
 }
 
-export function pcPlayer(gameBoard) {
+export function pcPlayer(gameBoard, player) {
 
     let index = 0;
     let subindex = 0;
@@ -50,11 +51,11 @@ export function pcPlayer(gameBoard) {
             {
                 row: index - 1,
                 column: subindex,
-                win: checkWinner(gameBoard, index - 1, subindex, "yellow"),
-                lose: checkWinner(gameBoard, index - 1, subindex, "red"),
-                advanceWin: checkPc(gameBoard, index - 1, subindex, "yellow") + 3 * checkPc(gameBoard, index - 1, subindex, "red"),
-                adWin: checkPc(gameBoard, index - 1, subindex, "yellow"),
-                adLose: checkPc(gameBoard, index - 1, subindex, "red"),
+                win: checkWinner(gameBoard, index - 1, subindex, oponenet(player)),
+                lose: checkWinner(gameBoard, index - 1, subindex, player),
+                advanceWin: 3 * checkPc(gameBoard, index - 1, subindex, player) + checkPc(gameBoard, index - 1, subindex, oponenet(player)),
+                adWin: checkPc(gameBoard, index - 1, subindex, oponenet(player)),
+                adLose: checkPc(gameBoard, index - 1, subindex, player),
             }];
 
         }

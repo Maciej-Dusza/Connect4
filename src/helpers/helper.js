@@ -8,3 +8,8 @@ export const initArray = (row, column, defaultValue = "") => {
     }
     return tab
 }
+
+
+export const oponenet = (player) => {
+    return player === "red" ? "yellow" : "red";
+}

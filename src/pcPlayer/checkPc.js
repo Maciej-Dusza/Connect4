@@ -1,3 +1,4 @@
+import { oponenet } from "../helpers/helper";
 
 export const checkPc = (gameBoard, index, subindex, player) => {
     let horizontalWin = checkHorizontal(gameBoard, index, subindex, player);
@@ -51,10 +52,7 @@ const checkSlantLeft = (gameBoard, index, subindex, player) => {
     let total = cuts.reduce((win, element) => win + checkCut(element, player), 0)
     return total;
 };
-const oponenet = (player) => {
-    if (player === "red") { return "yellow" };
-    return "red";
-}
+
 
 const checkCut = (cut, player) => {
 
