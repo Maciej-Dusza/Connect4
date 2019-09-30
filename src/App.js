@@ -21,7 +21,7 @@ export class App extends React.Component {
     };
 
     componentWillUnmount() {
-        this.state.game = "";
+        this.setState({ game: "" });
     }
 
     boardHigh(event) {

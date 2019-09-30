@@ -57,5 +57,5 @@ const checkSlantLeft = (gameBoard, index, subindex, player) => {
 const checkCut = (cut, player) => {
 
     if (cut.some((element) => element === oponenet(player))) { return 0; }
-    return cut.reduce((win, element) => win + (element === player && 10 || 1), 0)
+    return cut.reduce((win, element) => win + (element === player ? 10 : 1), 0)
 }
