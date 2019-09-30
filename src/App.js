@@ -54,8 +54,7 @@ export class App extends React.Component {
     render() {
 
         return <Router>
-            <Header
-            />
+            <Header />
             <Route exact path="/" render={() => (
                 <Game
                     rows={this.state.rows}

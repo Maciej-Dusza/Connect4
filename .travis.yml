@@ -1,0 +1,16 @@
+language: node_js
+node_js:
+- stable
+cache:
+  directories:
+  - node_modules
+script:
+- npm test
+- npm run build
+deploy:
+  provider: heroku
+  app: connect4-web
+  api_key:
+    secure:AXO2gENzgCTKBUajCDnEulaY00sxtbc+eVdbCokY+NvjCrLwT09oiQ8E91So34hzW3R5OeoiqcVucadxFZYqq8676TT/hboA4pSdEqDSooDTMkyqdv87St0sGKd9kXCMBrmuLzLOsuN0ahd1z2i5LruAxoxotjdcDU+26dc0/PERC8yk4ejE/X7tyYW8ykIqqA6oaylG2lMUK33fzpF1x9B0dJ3UF5DCgDxoVMmGxy4sQYLddzHWbf9P3XDEVrNsb0qJrevgjx+kFgPwiKrCk+GVS9uKyP6OhHOkusSNiFYcuS9l+kjUW5KM3iItGFhLKyUQHfX/wgaphuJnX8nLYqusF4DYu9Z/bvB6tQBVTZ4+iVhLvZuYP2HZQYMRmO52/+NJOACfRLiVbACDEq5adZIogYwNcjWJcDqnAGrYC7X6nVL+wUFBXGqc4/T2ZrGVP2Cz5r0dhpVffgs2GSnzhmfjW94YUt0KETUBRbQK7jj0/xKmhQZV+X6vJXluDd9I0aEVYEhBhAlTVP6NkyVC/W0Vhw1lv9NUeWzzu9D/ARhsJewz8o7TTZ8jYQNG9i18bayKY34FkoGpGzuMh8E6dhnRwnG2Cfw2TG4Hd2XaAHNgOqehwLDr+l6DKvK5JmAXxPRhZllrDLu2k56IkJfcVwdsq60Jf4T9DkSxpKayiHM=
+true:
+  branch: master
