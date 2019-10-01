@@ -2,13 +2,8 @@ import { oponenet } from "../helpers/helper";
 
 
 export const checkPc = (gameBoard, index, subindex, player) => {
-
-    let horizontalWin = checkHorizontal(gameBoard, index, subindex, player);
-    let verticalWin = checkVertical(gameBoard, index, subindex, player);
-    let slantRightWin = checkSlantRight(gameBoard, index, subindex, player);
-    let slantLeftWin = checkSlantLeft(gameBoard, index, subindex, player);
-    // console.log("Player: ", player, "I/S: ", index, subindex, "Vertical: ", verticalWin, "Horizontal: ", horizontalWin, "SlantR: ", slantRightWin, "SlantL: ", slantLeftWin)
-    return verticalWin + horizontalWin + slantRightWin + slantLeftWin;
+    const checksFun = [checkHorizontal, checkVertical, checkSlantRight, checkSlantLeft];
+    return checksFun.reduce((acc, fun) => acc + fun(gameBoard, index, subindex, player), 0);
 }
 
 const checkHorizontal = (gameBoard, index, subindex, player) => {
@@ -34,9 +29,7 @@ const checkVertical = (gameBoard, index, subindex, player) => {
             cuts.push(vertical)
         }
     }
-    let total = cuts.reduce((win, element) => win + checkCut(element, player), 0)
-
-    return total;
+    return cuts.reduce((win, element) => win + checkCut(element, player), 0)
 };
 
 const checkSlantRight = (gameBoard, index, subindex, player) => {
@@ -51,8 +44,7 @@ const checkSlantRight = (gameBoard, index, subindex, player) => {
             cuts.push(slant);
         }
     }
-    let total = cuts.reduce((win, element) => win + checkCut(element, player), 0)
-    return total;
+    return cuts.reduce((win, element) => win + checkCut(element, player), 0)
 };
 
 const checkSlantLeft = (gameBoard, index, subindex, player) => {
@@ -67,13 +59,10 @@ const checkSlantLeft = (gameBoard, index, subindex, player) => {
             cuts.push(slant);
         }
     }
-    let total = cuts.reduce((win, element) => win + checkCut(element, player), 0)
-    return total;
+    return cuts.reduce((win, element) => win + checkCut(element, player), 0)
 };
 
-
 const checkCut = (cut, player) => {
-
     if (cut.some((element) => element === oponenet(player))) { return 0; }
     return cut.reduce((win, element) => win + (element === player ? 30 : 1), 0)
 }
