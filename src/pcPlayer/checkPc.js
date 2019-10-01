@@ -1,6 +1,8 @@
 import { oponenet } from "../helpers/helper";
 
+
 export const checkPc = (gameBoard, index, subindex, player) => {
+
     let horizontalWin = checkHorizontal(gameBoard, index, subindex, player);
     let verticalWin = checkVertical(gameBoard, index, subindex, player);
     let slantRightWin = checkSlantRight(gameBoard, index, subindex, player);
@@ -12,8 +14,10 @@ export const checkPc = (gameBoard, index, subindex, player) => {
 const checkHorizontal = (gameBoard, index, subindex, player) => {
     let cuts = [];
     for (let step = 0; step < 4; step++) {
-        if (subindex - step >= 0 && subindex - step + 3 < 7) {
-            cuts.push(gameBoard[index].slice(subindex - step, subindex - step + 4))
+        const subindexInRange = subindex - step >= 0 && subindex - step + 3 < gameBoard[0].length;
+        if (subindexInRange) {
+            const horizontal = gameBoard[index].slice(subindex - step, subindex - step + 4);
+            cuts.push(horizontal);
         }
     }
     return cuts.reduce((win, element) => win + checkCut(element, player), 0);
@@ -22,8 +26,12 @@ const checkHorizontal = (gameBoard, index, subindex, player) => {
 const checkVertical = (gameBoard, index, subindex, player) => {
     let cuts = [];
     for (let step = 0; step < 4; step++) {
-        if (index + step <= 5 && index + step - 3 >= 0) {
-            cuts.push(gameBoard.slice(index + step - 3, index + step + 1).map((element) => element[subindex]))
+        const indexInRange = index + step <= 5 && index + step - 3 >= 0;
+        if (indexInRange) {
+            const vertical = gameBoard
+                .slice(index + step - 3, index + step + 1)
+                .map((element) => element[subindex])
+            cuts.push(vertical)
         }
     }
     let total = cuts.reduce((win, element) => win + checkCut(element, player), 0)
@@ -34,8 +42,13 @@ const checkVertical = (gameBoard, index, subindex, player) => {
 const checkSlantRight = (gameBoard, index, subindex, player) => {
     let cuts = [];
     for (let step = 0; step < 4; step++) {
-        if (index + step <= 5 && index + step - 3 >= 0 && subindex - step >= 0 && subindex - step + 3 < 7) {
-            cuts.push(gameBoard.slice(index + step - 3, index + step + 1).map((element, position) => element[subindex + 3 - position - step]));
+        const indexInRange = index + step <= 5 && index + step - 3 >= 0;
+        const subindexInRange = subindex - step >= 0 && subindex - step + 3 < gameBoard[0].length;
+        if (indexInRange && subindexInRange) {
+            const slant = gameBoard
+                .slice(index + step - 3, index + step + 1)
+                .map((element, position) => element[subindex + 3 - position - step])
+            cuts.push(slant);
         }
     }
     let total = cuts.reduce((win, element) => win + checkCut(element, player), 0)
@@ -45,8 +58,13 @@ const checkSlantRight = (gameBoard, index, subindex, player) => {
 const checkSlantLeft = (gameBoard, index, subindex, player) => {
     let cuts = [];
     for (let step = 0; step < 4; step++) {
-        if (index + step <= 5 && index + step - 3 >= 0 && subindex - 3 + step >= 0 && subindex - step < 7) {
-            cuts.push(gameBoard.slice(index + step - 3, index + step + 1).map((element, position) => element[subindex - 3 + position + step]));
+        const indexInRange = index + step <= 5 && index + step - 3 >= 0;
+        const subIndexInRange = subindex - 3 + step >= 0 && subindex - step < gameBoard[0].length
+        if (indexInRange && subIndexInRange) {
+            const slant = gameBoard
+                .slice(index + step - 3, index + step + 1)
+                .map((element, position) => element[subindex - 3 + position + step])
+            cuts.push(slant);
         }
     }
     let total = cuts.reduce((win, element) => win + checkCut(element, player), 0)
@@ -57,5 +75,5 @@ const checkSlantLeft = (gameBoard, index, subindex, player) => {
 const checkCut = (cut, player) => {
 
     if (cut.some((element) => element === oponenet(player))) { return 0; }
-    return cut.reduce((win, element) => win + (element === player ? 10 : 1), 0)
+    return cut.reduce((win, element) => win + (element === player ? 30 : 1), 0)
 }

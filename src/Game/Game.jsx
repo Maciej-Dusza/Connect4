@@ -58,7 +58,6 @@ export class Game extends React.Component {
         const copyGameBoard = [...this.state.gameBoard]
         copyGameBoard[index][subindex] = actUser;
         this.setState({ gameBoard: copyGameBoard });
-
         const win = checkWinner(copyGameBoard, index, subindex);
         if (win >= 3) {
             this.setState({ activeGame: "Win", activeUser: actUser });
@@ -72,10 +71,13 @@ export class Game extends React.Component {
         const gameEnded = this.updateBoard(index, subindex);
         if (gameEnded) { return }
         if (this.props.gameMode === "playerVsComputer") {
-            const [i, s] = pcPlayer(this.state.gameBoard, this.state.activeUser);
+            const [i, s] = pcPlayer(this.state.gameBoard, this.state.activeUser, this.props.rows, this.props.columns);
+            if (i === -1) {
+                this.setState({ activeGame: "Win" });
+                this.props.setGame("");
+                return;
+            }
             this.updateBoard(i, s, oponenet(this.state.activeUser));
-            // const cpGameEnded = this.updateBoard(i, s, oponenet(this.state.activeUser));
-            // !cpGameEnded && this.changeUser();
         }
         else {
             console.log("change User")
@@ -117,8 +119,6 @@ export class Game extends React.Component {
                             pauseGame={this.pauseGame}
                             resetGame={this.resetGame}
                         />
-                        {this.props.a}
-
 
                         <div style={{ position: "relative" }}>
                             <Board
